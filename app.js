@@ -16,6 +16,26 @@ const escapeHtml = (value = "") => String(value).replace(/[&<>'"]/g, (char) => (
 let quantity = 1;
 let selectedIngredients = [];
 let ordersChannel = null;
+let pageScrollPosition = 0;
+
+function lockPageScroll() {
+  if (document.body.classList.contains("modal-open")) return;
+  pageScrollPosition = window.scrollY;
+  document.body.style.top = `-${pageScrollPosition}px`;
+  document.body.classList.add("modal-open");
+}
+
+function unlockPageScroll() {
+  if (document.querySelector("dialog[open]")) return;
+  document.body.classList.remove("modal-open");
+  document.body.style.top = "";
+  window.scrollTo(0, pageScrollPosition);
+}
+
+function openModal(dialog) {
+  lockPageScroll();
+  dialog.showModal();
+}
 
 function renderIngredients() {
   $("#ingredientGrid").innerHTML = ingredients.map((item) => `<label class="ingredient-option"><input type="checkbox" value="${item.id}"><span class="ingredient-tile"><b aria-hidden="true">${item.icon}</b><strong>${item.name}</strong><i>✓</i></span></label>`).join("");
@@ -39,7 +59,7 @@ function openReservation() {
   document.querySelectorAll("#ingredientGrid input").forEach((input) => { input.checked = false; });
   $("#selectionCount").textContent = "0 de 3"; $("#selectionHelp").textContent = "Selecciona al menos uno para continuar.";
   $("#pickupDay").innerHTML = `<option value="Hoy — ${localDate(0)}">Hoy — ${localDate(0)}</option><option value="Mañana — ${localDate(1)}">Mañana — ${localDate(1)}</option>`;
-  updateTotal(); $("#reserveDialog").showModal();
+  updateTotal(); openModal($("#reserveDialog"));
 }
 
 async function submitOrder(event) {
@@ -57,7 +77,7 @@ async function submitOrder(event) {
 
 async function requestOrdersPanel() {
   const { data: { session } } = await db.auth.getSession();
-  if (!session) { $("#loginError").textContent = ""; $("#loginDialog").showModal(); return; }
+  if (!session) { $("#loginError").textContent = ""; openModal($("#loginDialog")); return; }
   await openOrdersPanel();
 }
 
@@ -70,7 +90,7 @@ async function login(event) {
 }
 
 async function openOrdersPanel() {
-  $("#ordersDialog").showModal(); await renderOrders();
+  openModal($("#ordersDialog")); await renderOrders();
   if (ordersChannel) await db.removeChannel(ordersChannel);
   ordersChannel = db.channel("orders-panel").on("postgres_changes", { event: "*", schema: "public", table: "orders" }, renderOrders).subscribe();
 }
@@ -100,4 +120,5 @@ $("#plus").addEventListener("click", () => { quantity = Math.min(10, quantity + 
 $("#reserveForm").addEventListener("submit", submitOrder); $("#loginForm").addEventListener("submit", login); $("#startOrder").addEventListener("click", openReservation);
 $("[data-close]").addEventListener("click", () => $("#reserveDialog").close()); $("[data-close-login]").addEventListener("click", () => $("#loginDialog").close()); $("[data-close-orders]").addEventListener("click", () => $("#ordersDialog").close());
 $("#openOrders").addEventListener("click", requestOrdersPanel); $("#clearCompleted").addEventListener("click", clearCompleted); $("#logoutButton").addEventListener("click", logout);
+document.querySelectorAll("dialog").forEach((dialog) => dialog.addEventListener("close", () => requestAnimationFrame(unlockPageScroll)));
 $("#year").textContent = new Date().getFullYear(); renderIngredients();

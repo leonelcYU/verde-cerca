@@ -11,6 +11,7 @@
 
 /* Protección contra desbordamiento horizontal */
 html,body{max-width:100%;overflow-x:hidden}.dialog{max-width:calc(100vw - 24px);overflow-x:hidden}.dialog form,.dialog>section{width:100%;min-width:0;overflow-x:hidden}.ingredient-fieldset{min-width:0;max-width:100%}.ingredient-grid{width:100%;min-width:0;grid-template-columns:repeat(3,minmax(0,1fr))}.ingredient-option,.ingredient-tile{min-width:0;max-width:100%}.ingredient-tile strong{width:100%;padding:0 4px;text-align:center;overflow-wrap:anywhere}.dialog input,.dialog select,.dialog textarea{min-width:0;max-width:100%}.order-item{min-width:0}.order-item>div{min-width:0}.order-item h4,.order-item p{overflow-wrap:anywhere}
+body.modal-open{position:fixed;left:0;right:0;width:100%;overflow:hidden;overscroll-behavior:none}.dialog{overscroll-behavior:contain;touch-action:pan-y}.dialog form,.dialog>section{overscroll-behavior:contain}
 
 @media(max-width:600px){
   .dialog{width:calc(100vw - 24px);max-width:calc(100vw - 24px);max-height:calc(100dvh - 24px);margin:auto;border-radius:14px}
