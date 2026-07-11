@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#173f35" />
+    <meta name="description" content="Reserva ensaladas frescas preparadas cada mañana." />
+    <title>Verde Cerca — Ensaladas frescas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="#inicio" aria-label="Verde Cerca, inicio">
+        <span class="brand-mark" aria-hidden="true">V</span>
+        <span>Verde Cerca</span>
+      </a>
+      <nav aria-label="Navegación principal">
+        <a href="#arma">Arma la tuya</a>
+        <a href="#como-funciona">Cómo funciona</a>
+        <button class="orders-link" id="openOrders" type="button">Ver pedidos</button>
+      </nav>
+    </header>
+
+    <main id="inicio">
+      <section class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow"><span></span> Preparadas cada mañana</p>
+          <h1>Tu almuerzo fresco, <em>sin complicarte.</em></h1>
+          <p class="hero-text">Elige hasta 3 ingredientes y reserva tu ensalada para hoy o mañana. Fresca, hecha a tu gusto y siempre a $1.000.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#arma">Armar mi ensalada <span aria-hidden="true">↓</span></a>
+            <p><strong>Retiro fácil</strong><br />Te avisamos cuando esté lista</p>
+          </div>
+          <div class="trust-row" aria-label="Beneficios">
+            <span>✓ Pago al retirar</span>
+            <span>✓ Reserva en 1 minuto</span>
+            <span>✓ Cupos limitados</span>
+          </div>
+        </div>
+        <div class="hero-visual" aria-label="Ensalada fresca con vegetales">
+          <div class="hero-badge"><strong>100%</strong><span>fresco</span></div>
+          <div class="bowl" aria-hidden="true">
+            <span class="leaf leaf-1"></span><span class="leaf leaf-2"></span><span class="leaf leaf-3"></span>
+            <span class="tomato tomato-1"></span><span class="tomato tomato-2"></span><span class="egg"></span>
+          </div>
+          <p class="made-today">Hecha hoy · Para ti</p>
+        </div>
+      </section>
+
+      <section class="menu-section" id="arma">
+        <div class="section-heading">
+          <div><p class="eyebrow"><span></span> Hecha a tu gusto</p><h2>Arma tu ensalada</h2></div>
+          <p>Combina entre 1 y 3 ingredientes. Cada ensalada cuesta $1.000, sin importar la combinación.</p>
+        </div>
+        <div class="builder-card">
+          <div class="builder-copy"><span class="price-pill">Precio único · $1.000</span><h3>Tu mezcla, tu elección</h3><p>Tenemos vegetales frescos cada mañana. Elige tus favoritos y nosotros la dejamos lista para retirar.</p><ul><li>Hasta 3 ingredientes</li><li>Reserva para hoy o mañana</li><li>Pagas al retirar</li></ul></div>
+          <div class="builder-preview" aria-hidden="true"><span>🥗</span><small>Fresca y preparada para ti</small></div>
+          <button class="button button-primary builder-button" id="startOrder" type="button">Elegir ingredientes →</button>
+        </div>
+      </section>
+
+      <section class="steps" id="como-funciona">
+        <div class="section-heading compact"><div><p class="eyebrow"><span></span> Así de simple</p><h2>Tu ensalada en 3 pasos</h2></div></div>
+        <div class="step-grid">
+          <article><span>01</span><div class="step-icon">☝</div><h3>Combina</h3><p>Elige hasta 3 ingredientes para tu ensalada.</p></article>
+          <article><span>02</span><div class="step-icon">▣</div><h3>Reserva</h3><p>Déjanos tu nombre, teléfono y día de retiro.</p></article>
+          <article><span>03</span><div class="step-icon">♡</div><h3>Retira y disfruta</h3><p>Te avisamos por WhatsApp cuando esté lista.</p></article>
+        </div>
+      </section>
+
+      <section class="cta-band">
+        <div><p class="eyebrow light"><span></span> Cupos de mañana</p><h2>¿Ya sabes qué vas a almorzar?</h2><p>Reserva ahora y nosotros nos encargamos del resto.</p></div>
+        <a class="button button-light" href="#arma">Reservar mi ensalada →</a>
+      </section>
+    </main>
+
+    <footer><a class="brand footer-brand" href="#inicio"><span class="brand-mark">V</span><span>Verde Cerca</span></a><p>Ensaladas hechas con cariño, todos los días.</p><p>© <span id="year"></span> Verde Cerca</p></footer>
+
+    <dialog id="reserveDialog" class="dialog">
+      <form id="reserveForm" method="dialog">
+        <button class="close" type="button" data-close aria-label="Cerrar">×</button>
+        <p class="eyebrow"><span></span> Tu reserva</p>
+        <h2 id="dialogTitle">Arma tu ensalada</h2>
+        <p class="dialog-subtitle">Elige entre 1 y 3 ingredientes.</p>
+        <fieldset class="ingredient-fieldset"><legend>Ingredientes <span id="selectionCount">0 de 3</span></legend><div class="ingredient-grid" id="ingredientGrid"></div><p class="selection-help" id="selectionHelp">Selecciona al menos uno para continuar.</p></fieldset>
+        <div class="quantity-row"><span>Cantidad</span><div class="stepper"><button type="button" id="minus">−</button><output id="quantity">1</output><button type="button" id="plus">+</button></div></div>
+        <label>Tu nombre<input id="customerName" autocomplete="name" required placeholder="Ej: Carolina" /></label>
+        <label>WhatsApp<input id="phone" type="tel" autocomplete="tel" required placeholder="Ej: 9 1234 5678" /></label>
+        <label>Día de retiro<select id="pickupDay" required></select></label>
+        <label>Comentario <span>(opcional)</span><textarea id="notes" rows="2" placeholder="Ej: sin cebolla"></textarea></label>
+        <div class="order-total"><span>Total</span><strong id="orderTotal">$0</strong></div>
+        <button class="button button-primary full" type="submit">Confirmar reserva</button>
+        <small>El pago se realiza al momento de retirar.</small>
+      </form>
+    </dialog>
+
+    <dialog id="ordersDialog" class="dialog orders-dialog">
+      <section>
+        <button class="close" type="button" data-close-orders aria-label="Cerrar">×</button>
+        <div class="panel-heading"><div><p class="eyebrow"><span></span> Panel simple</p><h2>Pedidos recibidos</h2></div><button id="logoutButton" class="text-button" type="button">Cerrar sesión</button></div>
+        <div class="order-summary" id="orderSummary"></div>
+        <div class="ingredient-summary" id="ingredientSummary"></div>
+        <div class="order-list" id="orderList"></div>
+        <button id="clearCompleted" class="text-button" type="button">Borrar pedidos entregados</button>
+      </section>
+    </dialog>
+
+    <dialog id="loginDialog" class="dialog login-dialog">
+      <form id="loginForm">
+        <button class="close" type="button" data-close-login aria-label="Cerrar">×</button>
+        <p class="eyebrow"><span></span> Acceso privado</p>
+        <h2>Panel de pedidos</h2>
+        <p class="dialog-subtitle">Inicia sesión para revisar y administrar las reservas.</p>
+        <label>Correo<input id="adminEmail" type="email" autocomplete="username" value="carmenrosarivascanupan@gmail.com" required /></label>
+        <label>Contraseña<input id="adminPassword" type="password" autocomplete="current-password" required /></label>
+        <p class="form-error" id="loginError" role="alert"></p>
+        <button class="button button-primary full" id="loginButton" type="submit">Entrar al panel</button>
+      </form>
+    </dialog>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
