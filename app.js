@@ -21,14 +21,14 @@ let pageScrollPosition = 0;
 function lockPageScroll() {
   if (document.body.classList.contains("modal-open")) return;
   pageScrollPosition = window.scrollY;
-  document.body.style.top = `-${pageScrollPosition}px`;
+  document.documentElement.classList.add("modal-open");
   document.body.classList.add("modal-open");
 }
 
 function unlockPageScroll() {
   if (document.querySelector("dialog[open]")) return;
+  document.documentElement.classList.remove("modal-open");
   document.body.classList.remove("modal-open");
-  document.body.style.top = "";
   window.scrollTo(0, pageScrollPosition);
 }
 
